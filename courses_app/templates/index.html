@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Add a New Course</h1>
+    {%if messages%}
+    <ul>
+        {%for message in messages%}
+            <li>{{message}}</li>
+        {%endfor%}
+    </ul>
+    {%endif%}
+    <form action="/courses" method="POST">
+        {%csrf_token%}
+        <div class="form-row row justify-content-center" >
+            <label class="col-2" for="course_name">Course Name:</label>
+            <input class="col-3" type="text" name="course_name" id="course_name" >
+        <div class="form-row row justify-content-center">
+            <label class="col-2" for="description">Description:</label>
+            <input class="col-3" type="text" name="desc" id="desc"> 
+        </div>
+        <div class="form-row row justify-content-center">
+            <input class="col-1" type="submit" name="Add">
+        </div>
+    </form>
+    <h1>Courses</h1>
+    <table>
+        <tr>
+            <th>Course Name</th>
+            <th>Description</th>
+            <th>Date Added</th>
+            <th>Actions</th>
+        {% for course in all_courses %}
+        <tr>
+            <td>{{course.course_name}}</td>
+            <td>{{course.desc}}</td>
+            <td>{{course.created_at|date}}</td>
+            <td><a href="/courses/confirm/{{course.id}}">remove</a></td>
+        </tr>
+        {%endfor%}
+    </table>
+</body>
+</html>
